@@ -1,0 +1,61 @@
+-- Tabla Empleado
+CREATE TABLE Empleado (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    apellido VARCHAR(100),
+    fecha_nacimiento DATE,
+    puesto VARCHAR(100),
+    departamento VARCHAR(100)
+);
+
+-- Tabla Nómina
+CREATE TABLE Nomina (
+    id SERIAL PRIMARY KEY,
+    id_empleado INT REFERENCES Empleado(id),
+    fecha_pago DATE,
+    monto DECIMAL(10, 2)
+);
+
+-- Tabla Producto
+CREATE TABLE Producto (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    descripcion TEXT,
+    precio DECIMAL(10, 2),
+    cantidad_inventario INT
+);
+
+-- Tabla Venta
+CREATE TABLE Venta (
+    id SERIAL PRIMARY KEY,
+    id_producto INT REFERENCES Producto(id),
+    fecha_venta DATE,
+    cantidad_vendida INT,
+    precio_venta DECIMAL(10, 2)
+);
+
+-- Tabla Cliente
+CREATE TABLE Cliente (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    apellido VARCHAR(100),
+    direccion VARCHAR(255),
+    correo_electronico VARCHAR(100),
+    telefono VARCHAR(20)
+);
+
+-- Tabla Campaña de Marketing
+CREATE TABLE CampaniaMarketing (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    descripcion TEXT,
+    fecha_inicio DATE,
+    fecha_finalizacion DATE
+);
+
+-- Tabla de Asociación entre Venta y Campaña de Marketing
+CREATE TABLE Venta_CampaniaMarketing (
+    id_venta INT REFERENCES Venta(id),
+    id_campania INT REFERENCES CampaniaMarketing(id),
+    PRIMARY KEY (id_venta, id_campania)
+);
